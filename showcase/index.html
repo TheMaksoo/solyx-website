@@ -1,0 +1,347 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Showcase &#8212; Solyx Projects</title>
+  <meta name="description" content="See every Solyx project in action &#8212; Discord bot, web game, Factorio mod, and karting analytics.">
+  <link rel="icon" type="image/png" href="/assets/SolyxIcon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#0b0b0d; --surface:#17171c; --surface2:#121216; --border:#26262e;
+      --accent:#e8452a; --accent2:rgba(232,69,42,.55); --text:#ecebef;
+      --dim:#9a99a3; --faint:#5c5b64; --r:12px;
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:"Manrope",system-ui,sans-serif; background:var(--bg); color:var(--text); }
+    a { text-decoration:none; color:inherit; }
+    h1,h2,h3,h4 { font-family:"Space Grotesk",sans-serif; }
+
+    /* NAV */
+    .nav { position:sticky;top:0;z-index:200;background:rgba(11,11,13,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border); }
+    .nav-inner { max-width:1160px;margin:0 auto;display:flex;align-items:center;gap:20px;padding:0 40px;height:56px; }
+    .nav-logo { display:flex;align-items:center;gap:10px; }
+    .nav-logo img { height:28px;filter:drop-shadow(0 2px 6px rgba(232,69,42,.45)); }
+    .nav-logo span { font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:17px;letter-spacing:3px; }
+    .nav-links { display:flex;gap:22px;font-size:13px;font-weight:500;color:var(--dim); }
+    .nav-links a:hover { color:var(--text); }
+    .nav-links a.active { color:var(--text); }
+    .nav-spacer { flex:1; }
+    .nav-back { font-size:13px;color:var(--dim);padding:7px 14px;border:1px solid var(--border);border-radius:8px;transition:border-color .15s,color .15s; }
+    .nav-back:hover { border-color:var(--accent2);color:var(--text); }
+
+    /* HERO */
+    .hero { text-align:center;padding:72px 24px 48px;background:radial-gradient(ellipse 70% 50% at 50% -5%, rgba(232,69,42,.14) 0%, transparent 65%); }
+    .hero-label { font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--accent);margin-bottom:14px; }
+    .hero h1 { font-size:clamp(32px,5vw,54px);font-weight:700;margin-bottom:14px; }
+    .hero-sub { font-size:17px;color:var(--dim);max-width:540px;margin:0 auto;line-height:1.6; }
+
+    /* JUMP NAV */
+    .jump-nav { display:flex;justify-content:center;gap:10px;padding:28px 24px 0;flex-wrap:wrap; }
+    .jump-btn { font-family:"Space Grotesk",sans-serif;font-size:13px;font-weight:600;padding:9px 20px;border-radius:8px;background:var(--surface);border:1px solid var(--border);color:var(--dim);transition:border-color .15s,color .15s,background .15s;cursor:pointer; }
+    .jump-btn:hover { border-color:var(--accent2);color:var(--text);background:#1e1c22; }
+
+    /* SECTION */
+    .showcase-section { border-top:1px solid var(--border);padding:72px 0; }
+    .showcase-section:nth-child(even) { background:var(--surface2); }
+    .section-inner { max-width:1100px;margin:0 auto;padding:0 40px; }
+    .section-header { display:flex;align-items:flex-start;justify-content:space-between;gap:32px;margin-bottom:36px;flex-wrap:wrap; }
+    .section-meta { flex:1;min-width:260px; }
+    .section-tag { font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px; }
+    .section-title { font-size:clamp(24px,3.5vw,38px);font-weight:700;margin-bottom:12px; }
+    .section-desc { font-size:15px;color:var(--dim);line-height:1.65;max-width:480px; }
+    .section-btns { display:flex;gap:10px;margin-top:24px;flex-wrap:wrap; }
+    .btn { display:inline-flex;align-items:center;gap:7px;font-family:"Space Grotesk",sans-serif;font-size:13px;font-weight:600;padding:10px 20px;border-radius:8px;transition:all .15s; }
+    .btn-primary { background:var(--accent);color:#fff; } .btn-primary:hover { opacity:.85;color:#fff; }
+    .btn-ghost { background:var(--surface);color:var(--text);border:1px solid var(--border); } .btn-ghost:hover { border-color:var(--accent2);color:var(--text); }
+
+    /* STATS ROW */
+    .stats-row { display:flex;gap:10px;margin-top:20px;flex-wrap:wrap; }
+    .stat-chip { font-size:12px;font-weight:600;padding:5px 12px;border-radius:6px;background:rgba(232,69,42,.1);border:1px solid rgba(232,69,42,.2);color:var(--accent); }
+
+    /* FEATURE GRID */
+    .feature-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px; }
+    .feat { background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px; }
+    .feat-icon { width:32px;height:32px;border-radius:8px;background:linear-gradient(145deg,#2a1512,#1a0d0b);border:1px solid #3a2420;display:flex;align-items:center;justify-content:center;margin-bottom:10px; }
+    .feat-icon span { font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:12px;color:var(--accent); }
+    .feat-title { font-family:"Space Grotesk",sans-serif;font-size:13px;font-weight:600;margin-bottom:5px; }
+    .feat-desc { font-size:12px;color:var(--dim);line-height:1.5; }
+
+    /* DEMO FRAME */
+    .demo-wrap { border-radius:10px;overflow:hidden;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.55);margin-top:28px; }
+    .demo-frame { width:100%;border:none;display:block; }
+    .demo-note { margin-top:10px;font-size:12px;color:var(--faint);text-align:center; }
+
+    /* COMMAND PREVIEW */
+    .cmd-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:28px; }
+    .cmd { background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 16px; }
+    .cmd-name { font-family:"Consolas",monospace;font-size:13px;color:#ffd9cf;margin-bottom:4px; }
+    .cmd-desc { font-size:12px;color:var(--dim); }
+
+    /* GAME MOCKUP */
+    .game-mockup { background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:28px;box-shadow:0 20px 60px rgba(0,0,0,.5); }
+    .game-topbar { background:var(--surface2);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:12px; }
+    .game-dot { width:10px;height:10px;border-radius:50%; }
+    .game-title { font-family:"Space Grotesk",sans-serif;font-size:13px;font-weight:600;color:var(--dim);margin-left:4px; }
+    .game-body { padding:24px; }
+    .game-location { background:#0e0d10;border:1px solid var(--border);border-radius:8px;padding:16px 20px;margin-bottom:16px; }
+    .game-loc-title { font-family:"Space Grotesk",sans-serif;font-size:15px;font-weight:700;color:var(--accent);margin-bottom:4px; }
+    .game-loc-desc { font-size:13px;color:var(--dim);line-height:1.5; }
+    .game-stats { display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px; }
+    .game-stat { background:#0e0d10;border:1px solid var(--border);border-radius:6px;padding:10px;text-align:center; }
+    .game-stat-val { font-family:"Space Grotesk",sans-serif;font-size:18px;font-weight:700;color:var(--text); }
+    .game-stat-label { font-size:10px;color:var(--faint);margin-top:2px; }
+    .game-actions { display:flex;gap:8px; }
+    .game-btn { flex:1;padding:10px;border-radius:6px;font-family:"Space Grotesk",sans-serif;font-size:12px;font-weight:600;text-align:center;cursor:pointer;transition:opacity .15s; }
+    .game-btn-fight { background:var(--accent);color:#fff; }
+    .game-btn-quest { background:var(--surface2);color:var(--text);border:1px solid var(--border); }
+    .game-btn-shop { background:var(--surface2);color:var(--text);border:1px solid var(--border); }
+    .game-inventory { margin-top:16px; }
+    .inv-title { font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-bottom:10px; }
+    .inv-items { display:flex;gap:8px;flex-wrap:wrap; }
+    .inv-item { background:#0e0d10;border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:12px; }
+    .inv-item-name { color:var(--text);font-weight:600; }
+    .inv-item-type { font-size:10px;color:var(--faint); }
+    .live-dot { display:inline-block;width:7px;height:7px;border-radius:50%;background:#8cd16b;margin-right:6px;animation:pulse 1.6s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+    /* FOOTER */
+    .footer { border-top:1px solid var(--border);background:var(--surface2);padding:28px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px; }
+    .footer-logo { display:flex;align-items:center;gap:9px; }
+    .footer-logo img { height:24px;filter:drop-shadow(0 1px 5px rgba(232,69,42,.4)); }
+    .footer-logo span { font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:13px;letter-spacing:3px; }
+    .footer-links { display:flex;gap:16px;flex-wrap:wrap; }
+    .footer-links a { font-size:12px;color:var(--faint);transition:color .15s; }
+    .footer-links a:hover { color:var(--accent); }
+    .footer-copy { font-size:11px;color:#3a3840; }
+
+    @media(max-width:768px) {
+      .nav-links{display:none} .feature-grid,.cmd-grid{grid-template-columns:1fr 1fr} .game-stats{grid-template-columns:repeat(2,1fr)}
+      .section-inner{padding:0 20px} .footer{flex-direction:column;text-align:center;padding:20px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">
+      <img src="/assets/SolyxIcon.png" alt="Solyx">
+      <span>SOLYX</span>
+    </a>
+    <div class="nav-links">
+      <a href="/solyx-discord-bot/">Discord Bot</a>
+      <a href="/SolyxWebGame/">Web Game</a>
+      <a href="/mods/train-station-monitor/">Factorio Mod</a>
+      <a href="/karting/">Karting</a>
+    </div>
+    <div class="nav-spacer"></div>
+    <a class="nav-back" href="/">&#8592; Home</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">All projects</div>
+  <h1>Showcase</h1>
+  <p class="hero-sub">Every Solyx project, demonstrated. Explore what each one does before committing.</p>
+  <div class="jump-nav">
+    <a class="jump-btn" href="#discord-bot">Discord Bot</a>
+    <a class="jump-btn" href="#web-game">Web Game</a>
+    <a class="jump-btn" href="#factorio-mod">Factorio Mod</a>
+    <a class="jump-btn" href="#karting">Karting</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- DISCORD BOT -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="showcase-section" id="discord-bot">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-meta">
+        <div class="section-tag">Discord Bot</div>
+        <div class="section-title">Text-based RPG,<br>fully in Discord</div>
+        <div class="section-desc">A solo-developed Discord bot bringing a complete RPG to any server. Classes, quests, PvP battles, weapons, lore, and earnable titles &#8212; no app download required.</div>
+        <div class="stats-row">
+          <span class="stat-chip">490k+ Users</span>
+          <span class="stat-chip">1600+ Servers</span>
+          <span class="stat-chip">60+ Commands</span>
+        </div>
+        <div class="section-btns">
+          <a class="btn btn-primary" href="https://discord.com/oauth2/authorize" target="_blank">Add to Discord &#8594;</a>
+          <a class="btn btn-ghost" href="/solyx-discord-bot/">Full page &#8594;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feat"><div class="feat-icon"><span>C</span></div><div class="feat-title">Classes &amp; Specializations</div><div class="feat-desc">Choose your class and unlock a specialization path as you level up. Each class plays completely differently.</div></div>
+      <div class="feat"><div class="feat-icon"><span>Q</span></div><div class="feat-title">Quests &amp; Monsters</div><div class="feat-desc">In-depth world lore. Complete quests, defeat monsters, and discover the story as you progress.</div></div>
+      <div class="feat"><div class="feat-icon"><span>PvP</span></div><div class="feat-title">PvP Battles</div><div class="feat-desc">Challenge other players. Strategy, gear, and class choice all influence the outcome.</div></div>
+      <div class="feat"><div class="feat-icon"><span>W</span></div><div class="feat-title">Weapons &amp; Armour</div><div class="feat-desc">Dozens of items to collect and equip. Build your perfect loadout for any fight.</div></div>
+      <div class="feat"><div class="feat-icon"><span>T</span></div><div class="feat-title">Earnable Titles</div><div class="feat-desc">Prove yourself and earn titles shown beside your name for every server member to see.</div></div>
+      <div class="feat"><div class="feat-icon"><span>XP</span></div><div class="feat-title">Levelling System</div><div class="feat-desc">Gain XP through combat and quests. Every level unlocks new abilities and items.</div></div>
+    </div>
+
+    <div style="margin-top:28px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-bottom:14px;">Try these commands</div>
+      <div class="cmd-grid">
+        <div class="cmd"><div class="cmd-name">/play</div><div class="cmd-desc">Start your adventure</div></div>
+        <div class="cmd"><div class="cmd-name">/fight</div><div class="cmd-desc">Battle a monster or player</div></div>
+        <div class="cmd"><div class="cmd-name">/quest</div><div class="cmd-desc">View &amp; accept quests</div></div>
+        <div class="cmd"><div class="cmd-name">/inventory</div><div class="cmd-desc">Manage your gear</div></div>
+        <div class="cmd"><div class="cmd-name">/shop</div><div class="cmd-desc">Buy weapons &amp; armour</div></div>
+        <div class="cmd"><div class="cmd-name">/leaderboard</div><div class="cmd-desc">See the top players</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- WEB GAME -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="showcase-section" id="web-game">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-meta">
+        <div class="section-tag">Browser Game</div>
+        <div class="section-title">The Solyx RPG,<br>in your browser</div>
+        <div class="section-desc">No download, no install. Play the full Solyx RPG experience directly in your browser. Level up, fight monsters, complete quests, and compete for the top spot on the leaderboard.</div>
+        <div class="stats-row">
+          <span class="stat-chip">Free to play</span>
+          <span class="stat-chip">Browser-based</span>
+          <span class="stat-chip">Live leaderboard</span>
+        </div>
+        <div class="section-btns">
+          <a class="btn btn-primary" href="/SolyxWebGame/" target="_blank">Play now &#8594;</a>
+          <a class="btn btn-ghost" href="/SolyxWebGame/commands.php">All commands &#8594;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game UI mockup -->
+    <div class="game-mockup">
+      <div class="game-topbar">
+        <div class="game-dot" style="background:#e8452a;"></div>
+        <div class="game-dot" style="background:#f59e0b;margin-left:4px;"></div>
+        <div class="game-dot" style="background:#4ade80;margin-left:4px;"></div>
+        <span class="game-title"><span class="live-dot"></span>Solyx Web Game &#8212; Dashboard</span>
+      </div>
+      <div class="game-body">
+        <div class="game-stats">
+          <div class="game-stat"><div class="game-stat-val" style="color:var(--accent);">42</div><div class="game-stat-label">Level</div></div>
+          <div class="game-stat"><div class="game-stat-val" style="color:#f59e0b;">8,240</div><div class="game-stat-label">Gold</div></div>
+          <div class="game-stat"><div class="game-stat-val" style="color:#4ade80;">350/400</div><div class="game-stat-label">HP</div></div>
+          <div class="game-stat"><div class="game-stat-val" style="color:#60a5fa;">Mage</div><div class="game-stat-label">Class</div></div>
+        </div>
+
+        <div class="game-location">
+          <div class="game-loc-title">&#9656; Dark Forest &#8212; Zone 4</div>
+          <div class="game-loc-desc">A dense forest filled with shadow wolves and dark spirits. High XP zone. Danger level: Medium. Recommended level: 35+</div>
+        </div>
+
+        <div class="game-actions">
+          <div class="game-btn game-btn-fight">&#9876; Fight Monster</div>
+          <div class="game-btn game-btn-quest">&#9741; Quests (3)</div>
+          <div class="game-btn game-btn-shop">&#9673; Shop</div>
+        </div>
+
+        <div class="game-inventory">
+          <div class="inv-title">Equipped</div>
+          <div class="inv-items">
+            <div class="inv-item"><div class="inv-item-name">Shadow Staff +3</div><div class="inv-item-type">Weapon &#183; +84 ATK</div></div>
+            <div class="inv-item"><div class="inv-item-name">Arcane Robe</div><div class="inv-item-type">Armour &#183; +46 DEF</div></div>
+            <div class="inv-item"><div class="inv-item-name">Ring of Power</div><div class="inv-item-type">Accessory &#183; +12 MANA</div></div>
+            <div class="inv-item"><div class="inv-item-name">&#9733; Dragon Slayer</div><div class="inv-item-type">Title &#183; Earned</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="demo-note">This is a UI preview. <a href="/SolyxWebGame/" style="color:var(--accent)">Play the real game &#8594;</a></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- FACTORIO MOD -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="showcase-section" id="factorio-mod">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-meta">
+        <div class="section-tag">Factorio 2.0 Mod</div>
+        <div class="section-title">Train Station Monitor</div>
+        <div class="section-desc">Zero-config live dashboard for your Factorio rail network. Auto-discovers every station the moment it is built &#8212; no circuit signals, no combinators, no setup.</div>
+        <div class="stats-row">
+          <span class="stat-chip">Factorio 2.0</span>
+          <span class="stat-chip">Zero config</span>
+          <span class="stat-chip">1s refresh</span>
+          <span class="stat-chip">1000+ stations</span>
+        </div>
+        <div class="section-btns">
+          <a class="btn btn-primary" href="https://mods.factorio.com/mod/train-station-monitor" target="_blank">Get on Mod Portal &#8594;</a>
+          <a class="btn btn-ghost" href="/mods/train-station-monitor/">Full page &#8594;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-wrap">
+      <iframe class="demo-frame" src="/mods/train-station-monitor/demo.html" height="620" title="Train Station Monitor live demo" loading="lazy"></iframe>
+    </div>
+    <div class="demo-note">&#128161; Fully interactive &#8212; sort, filter, expand rows, toggle heatmap. This is the exact in-game UI.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- KARTING -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="showcase-section" id="karting">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-meta">
+        <div class="section-tag">Motorsport Analytics</div>
+        <div class="section-title">Karting Dashboard</div>
+        <div class="section-desc">Lap times meet precision analytics. Upload karting session emails, track your improvement across 7 Dutch venues, compete on live driver leaderboards, and dissect every lap with data you can actually act on.</div>
+        <div class="stats-row">
+          <span class="stat-chip">7 tracks</span>
+          <span class="stat-chip">Laravel + Vue 3</span>
+          <span class="stat-chip">990 tests</span>
+          <span class="stat-chip">Real-time</span>
+        </div>
+        <div class="section-btns">
+          <a class="btn btn-primary" href="/karting/demo.html">Try demo &#8594;</a>
+          <a class="btn btn-ghost" href="/karting/login">Login &#8594;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-wrap">
+      <iframe class="demo-frame" src="/karting/demo.html" height="620" title="Karting dashboard demo" loading="lazy"></iframe>
+    </div>
+    <div class="demo-note">&#127950; Demo uses sample data. <a href="/karting/login" style="color:var(--accent)">Login to see your real lap times &#8594;</a></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">
+    <img src="/assets/SolyxIcon.png" alt="Solyx">
+    <span>SOLYX</span>
+  </div>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="/solyx-discord-bot/">Discord Bot</a>
+    <a href="/SolyxWebGame/">Web Game</a>
+    <a href="/mods/train-station-monitor/">Factorio Mod</a>
+    <a href="/karting/">Karting</a>
+    <a href="/contact.php">Contact</a>
+  </div>
+  <div class="footer-copy">&#169; 2026 Solyx IT Solutions</div>
+</footer>
+
+</body>
+</html>
