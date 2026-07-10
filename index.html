@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Solyx â€” Projects by TheMaksoo</title>
-  <meta name="description" content="Solyx â€” Discord bot, Factorio mods, and karting analytics. Three arenas, one dragon.">
+  <title>Solyx &#8212; Projects by TheMaksoo</title>
+  <meta name="description" content="Solyx &#8212; Discord bot, Factorio mods, and karting analytics.">
   <link rel="icon" type="image/png" href="/assets/SolyxIcon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
@@ -21,7 +21,6 @@
     h1,h2,h3 { font-family:"Space Grotesk",sans-serif; }
     @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
     @keyframes glow  { 0%,100%{opacity:.55} 50%{opacity:.85} }
-
     /* NAV */
     .nav { position:sticky;top:0;z-index:100;background:rgba(11,11,13,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border); }
     .nav-inner { max-width:1160px;margin:0 auto;display:flex;align-items:center;gap:20px;padding:0 40px;height:60px; }
@@ -30,168 +29,148 @@
     .nav-logo span { font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:18px;letter-spacing:3px; }
     .nav-links { display:flex;gap:24px;font-size:14px;font-weight:500;color:var(--dim); }
     .nav-links a:hover { color:var(--text); }
+    .nav-links a.active { color:var(--text); }
     .nav-spacer { flex:1; }
     .nav-contact { font-size:13px;color:var(--dim);padding:7px 14px;border:1px solid var(--border);border-radius:8px;transition:border-color .15s,color .15s; }
     .nav-contact:hover { border-color:var(--accent2);color:var(--text); }
-
-    /* HERO */
+    /* AMBIENT */
     .hero { position:relative;overflow:hidden;text-align:center;padding:88px 24px 56px; }
     .ambient-top { position:absolute;top:-160px;left:50%;transform:translateX(-50%);width:820px;height:620px;background:radial-gradient(ellipse at center,rgba(232,69,42,.28),rgba(232,69,42,0) 62%);filter:blur(10px);animation:glow 6s ease-in-out infinite;pointer-events:none; }
     .ambient-br  { position:absolute;bottom:-220px;right:-140px;width:560px;height:560px;background:radial-gradient(circle,rgba(179,39,26,.18),rgba(179,39,26,0) 65%);pointer-events:none; }
+    /* HERO */
     .hero-logo { width:172px;height:auto;margin:0 auto 14px;display:block;filter:drop-shadow(0 14px 40px rgba(232,69,42,.5));animation:float 6s ease-in-out infinite; }
     .hero h1 { font-size:clamp(52px,9vw,96px);font-weight:700;letter-spacing:10px;line-height:1;background:linear-gradient(180deg,#fff 20%,#ffd9cf 120%);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:16px; }
     .hero-sub { font-size:17px;color:var(--dim);max-width:520px;margin:0 auto 14px;line-height:1.55; }
     .hero-by { font-size:13px;color:var(--faint); }
     .hero-by a { color:rgba(232,69,42,.7);transition:color .15s; }
     .hero-by a:hover { color:var(--accent); }
-
     /* CARDS */
-    .projects-wrap { max-width:1080px;width:100%;margin:40px auto 0;padding:0 40px 80px; }
+    .projects-wrap { max-width:1080px;width:100%;margin:40px auto 0;padding:0 40px 56px; }
     .section-label { font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--faint);margin-bottom:18px;text-align:center; }
     .projects { display:grid;grid-template-columns:repeat(2,1fr);gap:20px; }
     .card { display:flex;flex-direction:column;gap:14px;padding:26px 24px 24px;background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--border);border-radius:var(--r);transition:transform .2s,border-color .2s,box-shadow .2s; }
     .card:hover { transform:translateY(-6px);border-color:var(--accent2);box-shadow:0 18px 44px rgba(232,69,42,.16); }
-    .card-icon { width:46px;height:46px;border-radius:12px;background:linear-gradient(145deg,#2a1512,#1a0d0b);border:1px solid #3a2420;display:flex;align-items:center;justify-content:center; }
+    .card-icon { width:46px;height:46px;border-radius:12px;background:linear-gradient(145deg,#2a1512,#1a0d0b);border:1px solid #3a2420;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
     .card-icon img { width:46px;height:46px;border-radius:12px;object-fit:cover; }
     .card-icon-inner { width:22px;height:18px;border-radius:5px;background:var(--accent); }
     .card-icon-kart { width:22px;height:22px;border-radius:50%;border:3px solid var(--accent);display:flex;align-items:center;justify-content:center; }
     .card-icon-kart span { width:6px;height:6px;border-radius:50%;background:var(--accent);display:block; }
+    .card-icon-letter { font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:18px;color:var(--accent); }
     .card-title { font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:19px; }
     .card-desc { font-size:14px;color:var(--dim);line-height:1.55;flex:1; }
     .card-stat { font-size:12px;color:var(--faint); }
     .card-cta { font-size:14px;font-weight:600;color:var(--accent); }
-
-    /* ALSO BUILDING */
+    /* ALSO */
     .also { max-width:1080px;margin:0 auto;padding:0 40px 80px; }
-    .also-label { font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--faint);margin-bottom:18px;text-align:center; }
     .also-grid { display:grid;grid-template-columns:1fr 1fr;gap:20px; }
-
     /* FOOTER */
     .footer { border-top:1px solid var(--border);background:var(--surface2);padding:32px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px; }
     .footer-logo { display:flex;align-items:center;gap:9px; }
-    .footer-logo img { height:24px;filter:drop-shadow(0 2px 6px rgba(232,69,42,.4)); }
+    .footer-logo img { height:26px;filter:drop-shadow(0 2px 6px rgba(232,69,42,.4)); }
     .footer-logo span { font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:14px;letter-spacing:3px; }
-    .footer-links { display:flex;gap:18px; }
+    .footer-links { display:flex;gap:18px;flex-wrap:wrap; }
     .footer-links a { font-size:13px;color:var(--dim);transition:color .15s; }
     .footer-links a:hover { color:var(--accent); }
     .footer-copy { font-size:12px;color:var(--faint); }
-
     @media(max-width:640px) {
       .nav-links { display:none; }
-      .projects { grid-template-columns:1fr; }
-      .also-grid { grid-template-columns:1fr; }
+      .projects, .also-grid { grid-template-columns:1fr; }
       .projects-wrap, .also { padding-left:20px;padding-right:20px; }
       .footer { flex-direction:column;text-align:center;padding:24px 20px; }
     }
   </style>
 </head>
 <body>
-
 <nav class="nav">
   <div class="nav-inner">
-    <div class="nav-logo">
-      <img src="assets/solyxpfp.png" alt="Solyx">
+    <a class="nav-logo" href="/">
+      <img src="/assets/SolyxIcon.png" alt="Solyx">
       <span>SOLYX</span>
-    </div>
+    </a>
     <div class="nav-links">
       <a href="/solyx-discord-bot/">Discord Bot</a>
-      <a href="/SolyxWebGame/game.php">Web Game</a>
+      <a href="/SolyxWebGame/">Web Game</a>
       <a href="/mods/train-station-monitor/">Factorio Mod</a>
-      <a href="/karting/login">Karting</a>
+      <a href="/karting/">Karting</a>
     </div>
     <div class="nav-spacer"></div>
     <a class="nav-contact" href="/contact.php">Contact</a>
   </div>
 </nav>
-
 <section class="hero">
   <div class="ambient-top"></div>
   <div class="ambient-br"></div>
-  <img class="hero-logo" src="assets/solyxpfp.png" alt="Solyx dragon">
+  <img class="hero-logo" src="/assets/SolyxIcon.png" alt="Solyx dragon">
   <h1>SOLYX</h1>
-  <p class="hero-sub">Three arenas, one dragon. Community bots, game tooling, and racing â€” all under the Solyx banner.</p>
+  <p class="hero-sub">Three arenas, one dragon. Community bots, game tooling, and racing &#8212; all under the Solyx banner.</p>
   <p class="hero-by">Built by <a href="https://github.com/TheMaksoo">TheMaksoo</a></p>
 </section>
-
 <div class="projects-wrap">
   <div class="section-label">Projects</div>
   <div class="projects">
-
     <a class="card" href="/solyx-discord-bot/">
       <div class="card-icon"><div class="card-icon-inner"></div></div>
       <div class="card-title">Discord Bot</div>
       <div class="card-desc">A solo-developed Discord RPG bot with in-depth lore, quests, classes, PvP battles, weapons, armour, and earnable titles.</div>
-      <div class="card-stat">490k+ Users Â· 1600+ Servers</div>
-      <div class="card-cta">Open Discord Bot â†’</div>
+      <div class="card-stat">490k+ Users &#183; 1600+ Servers</div>
+      <div class="card-cta">Open Discord Bot &#8594;</div>
     </a>
-
-    <a class="card" href="/SolyxWebGame/game.php">
-      <div class="card-icon"><div style="font-size:22px;">ðŸŽ®</div></div>
+    <a class="card" href="/SolyxWebGame/">
+      <div class="card-icon"><div class="card-icon-letter">G</div></div>
       <div class="card-title">Web Game</div>
       <div class="card-desc">Play the Solyx RPG directly in your browser. Level up, fight monsters, complete quests and compete on the leaderboard.</div>
-      <div class="card-stat">Browser Â· Free to play</div>
-      <div class="card-cta">Play now â†’</div>
+      <div class="card-stat">Browser &#183; Free to play</div>
+      <div class="card-cta">Play now &#8594;</div>
     </a>
-
     <a class="card" href="/mods/train-station-monitor/">
-      <div class="card-icon"><img src="assets/tsm.png" alt="Train Station Monitor"></div>
+      <div class="card-icon"><img src="/assets/tsm.png" alt="Train Station Monitor"></div>
       <div class="card-title">Train Station Monitor</div>
-      <div class="card-desc">A live, zero-config Factorio 2.0 rail-network dashboard. Auto-discovers every station â€” no circuit signals, no combinators needed.</div>
-      <div class="card-stat">v0.1.0 Â· Factorio 2.0</div>
-      <div class="card-cta">View the mod â†’</div>
+      <div class="card-desc">A live, zero-config Factorio 2.0 rail-network dashboard. Auto-discovers every station &#8212; no circuit signals, no combinators needed.</div>
+      <div class="card-stat">v0.1.0 &#183; Factorio 2.0</div>
+      <div class="card-cta">View the mod &#8594;</div>
     </a>
-
-    <a class="card" href="/karting/login">
+    <a class="card" href="/karting/">
       <div class="card-icon"><div class="card-icon-kart"><span></span></div></div>
       <div class="card-title">Karting</div>
       <div class="card-desc">Lap times meet motorsport analytics. Upload race session emails, track improvements across 7 Dutch karting venues, compete on live driver leaderboards, and dissect every lap with precision data.</div>
-      <div class="card-stat">Laravel · Vue 3 · 990 tests · 7 tracks</div>
-      <div class="card-cta">Enter Karting →</div>
+      <div class="card-stat">Laravel &#183; Vue 3 &#183; 990 tests &#183; 7 tracks</div>
+      <div class="card-cta">Enter Karting &#8594;</div>
     </a>
-
   </div>
 </div>
-
 <div class="also">
-  <div class="also-label">Also helping build</div>
+  <div class="section-label">Also helping build</div>
   <div class="also-grid">
-
     <a class="card" href="https://iclaim.nl" target="_blank">
-      <div class="card-icon" style="font-size:22px;">🚗</div>
+      <div class="card-icon"><div class="card-icon-letter">i</div></div>
       <div class="card-title">iClaim</div>
-      <div class="card-desc">Dutch vehicle damage communication platform. Replaces phone calls and emails with real-time digital dossiers — connecting lease companies, insurers, and repair shops through automated data exchange. ISO 9001 &amp; ISO/IEC 27001 certified.</div>
-      <div class="card-stat">iclaim.nl · B2B SaaS · Automotive</div>
-      <div class="card-cta">Visit iClaim →</div>
+      <div class="card-desc">Dutch vehicle damage communication platform. Replaces phone calls and emails with real-time digital dossiers &#8212; connecting lease companies, insurers, and repair shops through automated data exchange. ISO 9001 &amp; ISO/IEC 27001 certified.</div>
+      <div class="card-stat">iclaim.nl &#183; B2B SaaS &#183; Automotive</div>
+      <div class="card-cta">Visit iClaim &#8594;</div>
     </a>
-
     <a class="card" href="https://maki.gg" target="_blank">
-      <div class="card-icon" style="font-size:22px;">🔥</div>
+      <div class="card-icon" style="background:linear-gradient(145deg,#3a0a0a,#220606);border-color:#5a1a1a;"><div class="card-icon-letter" style="color:#e8452a;">M</div></div>
       <div class="card-title">Maki</div>
-      <div class="card-desc">The only Discord app you'll ever need. AI-powered auto-moderation, XP &amp; levelling, Twitch/YouTube live alerts, 80+ server log types, growth analytics, and full ticket systems — all in one bot.</div>
-      <div class="card-stat">120M+ Users · 1M+ Servers · maki.gg</div>
-      <div class="card-cta">Visit Maki →</div>
+      <div class="card-desc">The only Discord app you&#8217;ll ever need. AI-powered auto-moderation, XP &amp; levelling, Twitch/YouTube live alerts, 80+ server log types, growth analytics, and full ticket systems &#8212; all in one bot.</div>
+      <div class="card-stat">120M+ Users &#183; 1M+ Servers &#183; maki.gg</div>
+      <div class="card-cta">Visit Maki &#8594;</div>
     </a>
-
   </div>
 </div>
-
 <footer class="footer">
   <div class="footer-logo">
-    <img src="assets/solyxpfp.png" alt="Solyx">
+    <img src="/assets/SolyxIcon.png" alt="Solyx">
     <span>SOLYX</span>
   </div>
   <div class="footer-links">
-    <a href="/solyx-discord-bot/">Discord</a>
-    <a href="/SolyxWebGame/game.php">Web Game</a>
-    <a href="/mods/train-station-monitor/">Mods</a>
-    <a href="/karting/login">Karting</a>
+    <a href="/solyx-discord-bot/">Discord Bot</a>
+    <a href="/SolyxWebGame/">Web Game</a>
+    <a href="/mods/train-station-monitor/">Factorio Mod</a>
+    <a href="/karting/">Karting</a>
     <a href="https://github.com/TheMaksoo" target="_blank">GitHub</a>
     <a href="/contact.php">Contact</a>
   </div>
-  <div class="footer-copy">Â© 2026 Solyx IT Solutions</div>
+  <div class="footer-copy">&#169; 2026 Solyx IT Solutions</div>
 </footer>
-
 </body>
 </html>
-
-
