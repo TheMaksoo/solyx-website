@@ -1,0 +1,32 @@
+name: Deploy Hub
+
+# Push to main → deploy index.html + assets to solyx.gg root
+#
+# 🔑 REQUIRED SECRETS: FTP_SERVER, FTP_USERNAME, FTP_PASSWORD
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: 🚀 Deploy to solyx.gg/
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server:    ${{ secrets.FTP_SERVER }}
+          username:  ${{ secrets.FTP_USERNAME }}
+          password:  ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: /public_html/
+          exclude: |
+            **/.git*
+            **/.git*/**
+
+      - name: Summary
+        run: echo "### 🎉 solyx.gg hub deployed!" >> $GITHUB_STEP_SUMMARY
