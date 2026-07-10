@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solyx Bot Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family:"Manrope",system-ui,sans-serif; background:#1e1f22; color:#dbdee1; min-height:100vh; display:flex; flex-direction:column; }
+    h1,h2,h3 { font-family:"Space Grotesk",sans-serif; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+    /* Discord shell */
+    .discord { display:flex; height:100vh; }
+
+    /* Server list */
+    .servers { width:72px; background:#1e1f22; padding:12px 0; display:flex; flex-direction:column; align-items:center; gap:8px; border-right:1px solid #111214; flex-shrink:0; }
+    .srv-icon { width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:border-radius .15s; font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:16px; }
+    .srv-icon:hover { border-radius:30%; }
+    .srv-icon.active { border-radius:30%; }
+    .srv-sep { width:32px; height:2px; background:#3f4147; border-radius:1px; }
+
+    /* Sidebar */
+    .sidebar { width:240px; background:#2b2d31; display:flex; flex-direction:column; flex-shrink:0; border-right:1px solid #111214; }
+    .server-name { padding:16px; font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:15px; border-bottom:1px solid #111214; display:flex; align-items:center; justify-content:space-between; }
+    .channels { padding:8px 0; flex:1; overflow-y:auto; }
+    .ch-category { padding:10px 16px 4px; font-size:11px; font-weight:700; letter-spacing:.8px; text-transform:uppercase; color:#949ba4; }
+    .ch-item { padding:6px 8px 6px 16px; margin:0 8px; border-radius:4px; font-size:14px; color:#949ba4; cursor:pointer; display:flex; align-items:center; gap:6px; transition:background .1s, color .1s; }
+    .ch-item:hover { background:#35373c; color:#dbdee1; }
+    .ch-item.active { background:#35373c; color:#fff; }
+    .ch-icon { font-size:16px; color:#80848e; }
+    .user-bar { padding:10px 12px; background:#232428; display:flex; align-items:center; gap:8px; }
+    .user-av { width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,#5865f2,#3b48d4); display:flex; align-items:center; justify-content:center; font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:12px; color:#fff; flex-shrink:0; }
+    .user-name { font-size:13px; font-weight:600; color:#fff; }
+    .user-tag { font-size:11px; color:#949ba4; }
+
+    /* Chat */
+    .chat { flex:1; display:flex; flex-direction:column; background:#313338; }
+    .chat-header { padding:12px 16px; border-bottom:1px solid #111214; display:flex; align-items:center; gap:8px; }
+    .chat-header-icon { color:#80848e; font-size:16px; }
+    .chat-header-name { font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:15px; }
+    .chat-header-desc { font-size:13px; color:#949ba4; margin-left:8px; }
+    .messages { flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:4px; }
+    .msg-group { display:flex; gap:16px; padding:4px 0; }
+    .msg-group:hover { background:rgba(0,0,0,.06); margin:0 -16px; padding:4px 16px; border-radius:3px; }
+    .av { width:40px; height:40px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:14px; color:#fff; }
+    .msg-content { flex:1; min-width:0; }
+    .msg-meta { display:flex; align-items:center; gap:8px; margin-bottom:4px; }
+    .msg-author { font-family:"Space Grotesk",sans-serif; font-size:14px; font-weight:600; }
+    .msg-time { font-size:11px; color:#949ba4; }
+    .bot-tag { font-size:10px; font-weight:700; padding:1px 5px; border-radius:3px; background:#5865f2; color:#fff; font-family:"Space Grotesk",sans-serif; }
+    .msg-text { font-size:14px; color:#dbdee1; line-height:1.55; }
+    .msg-text code { background:#2b2d31; padding:2px 6px; border-radius:3px; font-family:"Consolas",monospace; font-size:13px; }
+    .embed { background:#2b2d31; border-left:4px solid #e8452a; border-radius:0 6px 6px 0; padding:12px 16px; margin-top:6px; max-width:480px; }
+    .embed-title { font-family:"Space Grotesk",sans-serif; font-size:14px; font-weight:700; color:#fff; margin-bottom:6px; }
+    .embed-desc { font-size:13px; color:#b5bac1; line-height:1.55; margin-bottom:10px; }
+    .embed-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px; }
+    .embed-field { background:#313338; border-radius:4px; padding:7px 10px; }
+    .embed-field-name { font-size:11px; font-weight:700; color:#949ba4; margin-bottom:3px; }
+    .embed-field-val { font-size:13px; font-weight:600; color:#fff; }
+    .embed-btns { display:flex; gap:6px; flex-wrap:wrap; }
+    .embed-btn { font-size:12px; font-weight:600; padding:5px 12px; border-radius:4px; background:#4f545c; color:#dcddde; cursor:pointer; transition:background .15s; }
+    .embed-btn:hover { background:#686d73; }
+    .embed-btn.primary { background:#5865f2; color:#fff; }
+    .embed-btn.primary:hover { background:#4752c4; }
+    .hp-bar { height:6px; background:#1e1f22; border-radius:3px; overflow:hidden; margin-top:4px; }
+    .hp-fill { height:100%; border-radius:3px; }
+    .msg-continue { padding-left:56px; font-size:14px; color:#dbdee1; margin-top:2px; }
+    .sys-msg { text-align:center; font-size:12px; color:#949ba4; padding:8px 0; display:flex; align-items:center; gap:8px; }
+    .sys-msg::before, .sys-msg::after { content:""; flex:1; height:1px; background:#3f4147; }
+    .typing { display:flex; align-items:center; gap:6px; padding:8px 16px; font-size:13px; color:#949ba4; border-top:1px solid #1e1f22; }
+    .typing-dots { display:flex; gap:3px; }
+    .typing-dot { width:6px; height:6px; border-radius:50%; background:#949ba4; animation:pulse .8s ease-in-out infinite; }
+    .typing-dot:nth-child(2) { animation-delay:.15s; }
+    .typing-dot:nth-child(3) { animation-delay:.3s; }
+    .input-bar { padding:0 16px 16px; }
+    .input { background:#383a40; border-radius:8px; padding:11px 16px; font-size:14px; color:#949ba4; display:flex; align-items:center; justify-content:space-between; }
+    .live-dot { display:inline-block; width:7px; height:7px; border-radius:50%; background:#4ade80; animation:pulse 1.8s ease-in-out infinite; margin-right:5px; }
+
+    /* Members panel */
+    .members { width:240px; background:#2b2d31; padding:16px 12px; border-left:1px solid #111214; overflow-y:auto; }
+    .members-cat { font-size:11px; font-weight:700; letter-spacing:.8px; text-transform:uppercase; color:#949ba4; padding:16px 8px 4px; }
+    .member { display:flex; align-items:center; gap:10px; padding:6px 8px; border-radius:4px; cursor:pointer; transition:background .1s; }
+    .member:hover { background:#35373c; }
+    .m-av { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:12px; color:#fff; flex-shrink:0; position:relative; }
+    .m-status { position:absolute; bottom:-1px; right:-1px; width:11px; height:11px; border-radius:50%; border:2px solid #2b2d31; }
+    .m-name { font-size:14px; color:#dbdee1; }
+    .m-role { font-size:11px; color:#949ba4; }
+  </style>
+</head>
+<body>
+<div class="discord">
+
+  <!-- Server icons -->
+  <div class="servers">
+    <div class="srv-icon" style="background:linear-gradient(135deg,#e8452a,#c0280a);">S</div>
+    <div class="srv-sep"></div>
+    <div class="srv-icon active" style="background:linear-gradient(135deg,#5865f2,#3b48d4);">SC</div>
+    <div class="srv-icon" style="background:#35373c;color:#80848e;font-size:22px;">+</div>
+  </div>
+
+  <!-- Channel sidebar -->
+  <div class="sidebar">
+    <div class="server-name">
+      Solyx Community
+      <span style="color:#80848e;font-size:18px;">&#8964;</span>
+    </div>
+    <div class="channels">
+      <div class="ch-category">Information</div>
+      <div class="ch-item"><span class="ch-icon">#</span> welcome</div>
+      <div class="ch-item"><span class="ch-icon">#</span> announcements</div>
+      <div class="ch-category">RPG Channels</div>
+      <div class="ch-item active"><span class="ch-icon">#</span> solyx-rpg</div>
+      <div class="ch-item"><span class="ch-icon">#</span> battles</div>
+      <div class="ch-item"><span class="ch-icon">#</span> leaderboard</div>
+      <div class="ch-item"><span class="ch-icon">#</span> trade</div>
+      <div class="ch-category">General</div>
+      <div class="ch-item"><span class="ch-icon">#</span> general</div>
+      <div class="ch-item"><span class="ch-icon">#</span> off-topic</div>
+    </div>
+    <div class="user-bar">
+      <div class="user-av">TM</div>
+      <div><div class="user-name">TheMaksoo</div><div class="user-tag">Shadow Mage &#183; Lv.42</div></div>
+    </div>
+  </div>
+
+  <!-- Chat -->
+  <div class="chat">
+    <div class="chat-header">
+      <span class="chat-header-icon">#</span>
+      <span class="chat-header-name">solyx-rpg</span>
+      <span class="chat-header-desc">Play the Solyx RPG with /play</span>
+    </div>
+    <div class="messages">
+      <div class="sys-msg">Today</div>
+
+      <!-- /play command -->
+      <div class="msg-group">
+        <div class="av" style="background:linear-gradient(135deg,#5865f2,#3b48d4);">TM</div>
+        <div class="msg-content">
+          <div class="msg-meta"><span class="msg-author" style="color:#fff;">TheMaksoo</span><span class="msg-time">14:32</span></div>
+          <div class="msg-text"><code>/play</code></div>
+        </div>
+      </div>
+      <div class="msg-group">
+        <div class="av" style="background:linear-gradient(135deg,#e8452a,#c0280a);">SLX</div>
+        <div class="msg-content">
+          <div class="msg-meta"><span class="msg-author" style="color:#e8452a;">Solyx</span><span class="bot-tag">BOT</span><span class="msg-time">14:32</span></div>
+          <div class="embed">
+            <div class="embed-title">&#128293; Welcome to Solyx, TheMaksoo!</div>
+            <div class="embed-desc">You step into the world of Solyx. Your journey begins in the <strong>Starting Village</strong>. Choose your class to begin your adventure.</div>
+            <div class="embed-btns">
+              <div class="embed-btn primary">&#9876; Warrior</div>
+              <div class="embed-btn">&#9883; Mage</div>
+              <div class="embed-btn">&#9654; Rogue</div>
+              <div class="embed-btn">&#9728; Healer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- /fight command -->
+      <div class="msg-group" style="margin-top:8px;">
+        <div class="av" style="background:linear-gradient(135deg,#5865f2,#3b48d4);">TM</div>
+        <div class="msg-content">
+          <div class="msg-meta"><span class="msg-author" style="color:#fff;">TheMaksoo</span><span class="msg-time">14:35</span></div>
+          <div class="msg-text"><code>/fight</code></div>
+        </div>
+      </div>
+      <div class="msg-group">
+        <div class="av" style="background:linear-gradient(135deg,#e8452a,#c0280a);">SLX</div>
+        <div class="msg-content">
+          <div class="msg-meta"><span class="msg-author" style="color:#e8452a;">Solyx</span><span class="bot-tag">BOT</span><span class="msg-time">14:35</span></div>
+          <div class="embed" style="border-left-color:#f59e0b;">
+            <div class="embed-title" style="color:#f59e0b;">&#9876; Battle &#8212; Shadow Wolf (Lv.38)</div>
+            <div class="embed-grid">
+              <div class="embed-field"><div class="embed-field-name">TheMaksoo</div><div class="embed-field-val">312/400 HP</div><div class="hp-bar"><div class="hp-fill" style="width:78%;background:#4ade80;"></div></div></div>
+              <div class="embed-field"><div class="embed-field-name">Shadow Wolf</div><div class="embed-field-val">180/400 HP</div><div class="hp-bar"><div class="hp-fill" style="width:45%;background:#e8452a;"></div></div></div>
+            </div>
+            <div class="embed-desc">You dealt <strong>84 damage</strong> with Shadow Staff +3! The wolf howls in pain.</div>
+            <div class="embed-btns"><div class="embed-btn primary">&#9876; Attack</div><div class="embed-btn">&#9883; Cast Spell</div><div class="embed-btn">&#127939; Flee</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- /inventory command -->
+      <div class="msg-group" style="margin-top:8px;">
+        <div class="av" style="background:linear-gradient(135deg,#5865f2,#3b48d4);">TM</div>
+        <div class="msg-content">
+          <div class="msg-meta"><span class="msg-author" style="color:#fff;">TheMaksoo</span><span class="msg-time">14:41</span></div>
+          <div class="msg-text"><code>/inventory</code></div>
+        </div>
+      </div>
+      <div class="msg-group">
+        <div class="av" style="background:linear-gradient(135deg,#e8452a,#c0280a);">SLX</div>
+        <div class="msg-content">
+          <div class="msg-meta"><span class="msg-author" style="color:#e8452a;">Solyx</span><span class="bot-tag">BOT</span><span class="msg-time">14:41</span></div>
+          <div class="embed" style="border-left-color:#60a5fa;">
+            <div class="embed-title" style="color:#60a5fa;">&#127806; TheMaksoo&#8217;s Inventory &#8212; Shadow Mage</div>
+            <div class="embed-grid">
+              <div class="embed-field"><div class="embed-field-name">Weapon</div><div class="embed-field-val">Shadow Staff +3</div></div>
+              <div class="embed-field"><div class="embed-field-name">Armour</div><div class="embed-field-val">Arcane Robe</div></div>
+              <div class="embed-field"><div class="embed-field-name">Gold</div><div class="embed-field-val">8,240 &#128142;</div></div>
+              <div class="embed-field"><div class="embed-field-name">Title</div><div class="embed-field-val" style="color:#f59e0b;">&#9733; Dragon Slayer</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="typing"><span class="live-dot"></span>Solyx is typing<div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>
+    <div class="input-bar"><div class="input">Type a message or use /command...<span style="color:#5c5e66;font-size:18px;">&#9166;</span></div></div>
+  </div>
+
+  <!-- Members -->
+  <div class="members">
+    <div class="members-cat">Online &#8212; 3</div>
+    <div class="member"><div class="m-av" style="background:linear-gradient(135deg,#e8452a,#c0280a);">SLX<div class="m-status" style="background:#4ade80;"></div></div><div><div class="m-name">Solyx</div><div class="m-role">Bot</div></div></div>
+    <div class="member"><div class="m-av" style="background:linear-gradient(135deg,#5865f2,#3b48d4);">TM<div class="m-status" style="background:#4ade80;"></div></div><div><div class="m-name">TheMaksoo</div><div class="m-role">Admin</div></div></div>
+    <div class="member"><div class="m-av" style="background:#2d6a4f;">RK<div class="m-status" style="background:#f59e0b;"></div></div><div><div class="m-name">Raceking_NL</div><div class="m-role">Member</div></div></div>
+    <div class="members-cat" style="margin-top:8px;">Offline &#8212; 234</div>
+    <div class="member" style="opacity:.45;"><div class="m-av" style="background:#4f545c;">SP<div class="m-status" style="background:#80848e;"></div></div><div><div class="m-name">SpeedDemon99</div></div></div>
+    <div class="member" style="opacity:.45;"><div class="m-av" style="background:#4f545c;">KB<div class="m-status" style="background:#80848e;"></div></div><div><div class="m-name">KartBro_B</div></div></div>
+  </div>
+
+</div>
+</body>
+</html>
