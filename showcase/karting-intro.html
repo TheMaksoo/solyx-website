@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Karting Dashboard &#8212; Solyx</title>
+  <meta name="description" content="Lap time tracking and motorsport analytics for karting. Track improvement across 7 Dutch venues.">
+  <link rel="icon" type="image/png" href="/assets/SolyxIcon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg:#0b0b0d; --surface:#17171c; --surface2:#121216; --border:#26262e; --accent:#e8452a; --accent2:rgba(232,69,42,.55); --text:#ecebef; --dim:#9a99a3; --faint:#5c5b64; --r:12px; }
+    html { scroll-behavior:smooth; }
+    body { font-family:"Manrope",system-ui,sans-serif; background:var(--bg); color:var(--text); }
+    a { text-decoration:none; color:inherit; }
+    h1,h2,h3 { font-family:"Space Grotesk",sans-serif; }
+    @keyframes glow { 0%,100%{opacity:.55} 50%{opacity:.85} }
+    .nav { position:sticky;top:0;z-index:100;background:rgba(11,11,13,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border); }
+    .nav-inner { max-width:1160px;margin:0 auto;display:flex;align-items:center;gap:20px;padding:0 40px;height:56px; }
+    .nav-logo { display:flex;align-items:center;gap:10px; }
+    .nav-logo img { height:28px;filter:drop-shadow(0 2px 6px rgba(232,69,42,.45)); }
+    .nav-logo span { font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:17px;letter-spacing:3px; }
+    .nav-links { display:flex;gap:22px;font-size:13px;font-weight:500;color:var(--dim); }
+    .nav-links a:hover { color:var(--text); }
+    .nav-links a.active { color:var(--text); }
+    .nav-spacer { flex:1; }
+    .btn { display:inline-flex;align-items:center;gap:7px;font-family:"Space Grotesk",sans-serif;font-size:13px;font-weight:600;padding:9px 18px;border-radius:8px;transition:all .15s; }
+    .btn-primary { background:var(--accent);color:#fff; } .btn-primary:hover { opacity:.85;color:#fff; }
+    .btn-ghost { background:var(--surface);color:var(--text);border:1px solid var(--border); } .btn-ghost:hover { border-color:var(--accent2);color:var(--text); }
+    .hero { position:relative;overflow:hidden;text-align:center;padding:72px 24px 56px; }
+    .ambient-top { position:absolute;top:-140px;left:50%;transform:translateX(-50%);width:820px;height:600px;background:radial-gradient(ellipse at center,rgba(232,69,42,.2),rgba(232,69,42,0) 62%);filter:blur(10px);animation:glow 6s ease-in-out infinite;pointer-events:none; }
+    .hero-label { font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent);margin-bottom:10px; }
+    .hero h1 { font-size:clamp(32px,5vw,56px);font-weight:700;margin-bottom:14px;line-height:1.1; }
+    .hero-sub { font-size:17px;color:var(--dim);max-width:520px;margin:0 auto 32px;line-height:1.6; }
+    .chips { display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:32px; }
+    .chip { font-size:12px;font-weight:600;padding:5px 12px;border-radius:6px;background:rgba(232,69,42,.1);border:1px solid rgba(232,69,42,.2);color:var(--accent); }
+    .hero-btns { display:flex;gap:10px;justify-content:center;flex-wrap:wrap; }
+    .stats { border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface2);display:flex;justify-content:center; }
+    .stat { flex:1;max-width:200px;text-align:center;padding:22px 16px;border-right:1px solid var(--border); }
+    .stat:last-child { border-right:none; }
+    .stat-val { font-family:"Space Grotesk",sans-serif;font-size:26px;font-weight:700;color:var(--accent); }
+    .stat-label { font-size:12px;color:var(--dim);margin-top:3px; }
+    .demo-section { padding:56px 40px;background:var(--surface2);border-top:1px solid var(--border);border-bottom:1px solid var(--border); }
+    .demo-inner { max-width:1100px;margin:0 auto; }
+    .section-label { font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent);margin-bottom:8px; }
+    .section-title { font-size:clamp(20px,3vw,30px);font-weight:700;margin-bottom:10px; }
+    .section-sub { font-size:15px;color:var(--dim);max-width:520px;line-height:1.65;margin-bottom:24px; }
+    .demo-wrap { border-radius:10px;overflow:hidden;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.6); }
+    .demo-frame { width:100%;border:none;display:block; }
+    .demo-note { margin-top:12px;font-size:12px;color:var(--faint);text-align:center; }
+    .features { max-width:1100px;margin:0 auto;padding:64px 40px; }
+    .feat-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:32px; }
+    .feat { background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;transition:transform .2s,border-color .2s; }
+    .feat:hover { transform:translateY(-3px);border-color:var(--accent2); }
+    .feat-icon { width:32px;height:32px;border-radius:8px;background:linear-gradient(145deg,#2a1512,#1a0d0b);border:1px solid #3a2420;display:flex;align-items:center;justify-content:center;margin-bottom:12px; }
+    .feat-icon span { font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:11px;color:var(--accent); }
+    .feat-title { font-family:"Space Grotesk",sans-serif;font-size:14px;font-weight:600;margin-bottom:6px; }
+    .feat-desc { font-size:13px;color:var(--dim);line-height:1.55; }
+    .footer { border-top:1px solid var(--border);background:var(--surface2);padding:28px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px; }
+    .footer-logo { display:flex;align-items:center;gap:9px; }
+    .footer-logo img { height:24px;filter:drop-shadow(0 1px 5px rgba(232,69,42,.4)); }
+    .footer-logo span { font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:13px;letter-spacing:3px; }
+    .footer-links { display:flex;gap:16px;flex-wrap:wrap; }
+    .footer-links a { font-size:12px;color:var(--faint);transition:color .15s; }
+    .footer-links a:hover { color:var(--accent); }
+    .footer-copy { font-size:11px;color:#3a3840; }
+    @media(max-width:768px) { .nav-links{display:none} .stats{flex-wrap:wrap} .stat{flex:1 1 45%} .feat-grid{grid-template-columns:1fr 1fr} .demo-section,.features{padding-left:20px;padding-right:20px} .footer{flex-direction:column;text-align:center} }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">
+      <img src="/assets/SolyxIcon.png" alt="Solyx">
+      <span>SOLYX</span>
+    </a>
+    <div class="nav-links">
+      <a href="/solyx-discord-bot/">Discord Bot</a>
+      <a href="/SolyxWebGame/">Web Game</a>
+      <a href="/mods/train-station-monitor/">Factorio Mod</a>
+      <a href="/showcase/karting-intro.html" class="active">Karting</a>
+    </div>
+    <div class="nav-spacer"></div>
+    <a class="btn btn-primary" href="/karting/login">Login to dashboard &#8594;</a>
+  </div>
+</nav>
+<section class="hero">
+  <div class="ambient-top"></div>
+  <div class="hero-label">Motorsport Analytics</div>
+  <h1>Karting Dashboard</h1>
+  <p class="hero-sub">Lap times meet precision analytics. Upload race session emails, track improvement across 7 Dutch karting venues, and compete on live driver leaderboards.</p>
+  <div class="chips">
+    <span class="chip">7 Dutch tracks</span>
+    <span class="chip">Auto EML import</span>
+    <span class="chip">Live leaderboard</span>
+    <span class="chip">Personal best tracking</span>
+    <span class="chip">Laravel &#183; Vue 3</span>
+  </div>
+  <div class="hero-btns">
+    <a class="btn btn-primary" href="/karting/login">Login to dashboard &#8594;</a>
+    <a class="btn btn-ghost" href="#demo">&#9654; See the demo</a>
+  </div>
+</section>
+<div class="stats">
+  <div class="stat"><div class="stat-val">7</div><div class="stat-label">Dutch karting tracks</div></div>
+  <div class="stat"><div class="stat-val">EML</div><div class="stat-label">Auto session import</div></div>
+  <div class="stat"><div class="stat-val">Live</div><div class="stat-label">Driver leaderboard</div></div>
+  <div class="stat"><div class="stat-val">PB</div><div class="stat-label">Personal best tracking</div></div>
+</div>
+<div class="demo-section" id="demo">
+  <div class="demo-inner">
+    <div class="section-label">Interactive demo</div>
+    <div class="section-title">See it in action</div>
+    <p class="section-sub">Sample data &#8212; no login required. Explore the dashboard, lap times, and leaderboard exactly as you would in your own account.</p>
+    <div class="demo-wrap">
+      <iframe class="demo-frame" src="/showcase/karting.html" height="620" title="Karting dashboard demo" loading="lazy"></iframe>
+    </div>
+    <div class="demo-note">&#127950; Demo uses sample data. <a href="/karting/login" style="color:var(--accent);">Login to see your real lap times &#8594;</a></div>
+  </div>
+</div>
+<div class="features">
+  <div class="section-label">What it tracks</div>
+  <div class="section-title">Everything you need to improve</div>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon"><span>PB</span></div><div class="feat-title">Personal Bests</div><div class="feat-desc">Track your personal best lap at every track. See exactly how much you improved each session.</div></div>
+    <div class="feat"><div class="feat-icon"><span>LB</span></div><div class="feat-title">Live Leaderboard</div><div class="feat-desc">Compete with every driver on the platform. See where you rank at each of the 7 tracks.</div></div>
+    <div class="feat"><div class="feat-icon"><span>7T</span></div><div class="feat-title">7 Dutch Tracks</div><div class="feat-desc">Goodwood, Lot66 Breda, Raamsdonksveer and more. Upload sessions from any supported venue.</div></div>
+    <div class="feat"><div class="feat-icon"><span>EML</span></div><div class="feat-title">Email Import</div><div class="feat-desc">Auto-detect your session from the karting venue email. No manual entry &#8212; just upload and go.</div></div>
+    <div class="feat"><div class="feat-icon"><span>LAP</span></div><div class="feat-title">Lap Analysis</div><div class="feat-desc">Break down every lap in a session. Find your slowest sectors and spot where time is being lost.</div></div>
+    <div class="feat"><div class="feat-icon"><span>TR</span></div><div class="feat-title">Trend Charts</div><div class="feat-desc">See your improvement over time with session-by-session trend charts per track.</div></div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="footer-logo">
+    <img src="/assets/SolyxIcon.png" alt="Solyx">
+    <span>SOLYX</span>
+  </div>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="/solyx-discord-bot/">Discord Bot</a>
+    <a href="/SolyxWebGame/">Web Game</a>
+    <a href="/mods/train-station-monitor/">Factorio Mod</a>
+    <a href="/karting/login">Login</a>
+    <a href="/contact.php">Contact</a>
+  </div>
+  <div class="footer-copy">&#169; 2026 Solyx IT Solutions</div>
+</footer>
+</body>
+</html>
