@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Solyx â€” Projects by TheMaksoo</title>
   <meta name="description" content="Solyx â€” Discord bot, Factorio mods, and karting analytics. Three arenas, one dragon.">
+  <link rel="icon" type="image/png" href="/assets/SolyxIcon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -61,13 +62,9 @@
     .card-cta { font-size:14px;font-weight:600;color:var(--accent); }
 
     /* ALSO BUILDING */
-    .also { margin:0 auto;max-width:1080px;padding:0 40px 72px;text-align:center; }
-    .also-label { font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--faint);margin-bottom:14px; }
-    .also-pills { display:flex;gap:12px;justify-content:center;flex-wrap:wrap; }
-    .pill { display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;font-size:14px;font-weight:600;color:#cfced6;transition:border-color .2s,color .2s; }
-    .pill:hover { border-color:var(--accent2);color:#fff; }
-    .pill-dot { width:7px;height:7px;border-radius:50%;background:var(--accent); }
-    .pill-sub { font-weight:400;color:var(--faint); }
+    .also { max-width:1080px;margin:0 auto;padding:0 40px 80px; }
+    .also-label { font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--faint);margin-bottom:18px;text-align:center; }
+    .also-grid { display:grid;grid-template-columns:1fr 1fr;gap:20px; }
 
     /* FOOTER */
     .footer { border-top:1px solid var(--border);background:var(--surface2);padding:32px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px; }
@@ -82,6 +79,7 @@
     @media(max-width:640px) {
       .nav-links { display:none; }
       .projects { grid-template-columns:1fr; }
+      .also-grid { grid-template-columns:1fr; }
       .projects-wrap, .also { padding-left:20px;padding-right:20px; }
       .footer { flex-direction:column;text-align:center;padding:24px 20px; }
     }
@@ -146,9 +144,9 @@
     <a class="card" href="/karting/login">
       <div class="card-icon"><div class="card-icon-kart"><span></span></div></div>
       <div class="card-title">Karting</div>
-      <div class="card-desc">Enterprise-grade lap time tracking and analytics. Upload session emails, track performance across 7 tracks, and compare with friends.</div>
-      <div class="card-stat">Laravel Â· Vue 3 Â· 990 tests</div>
-      <div class="card-cta">Enter Karting â†’</div>
+      <div class="card-desc">Lap times meet motorsport analytics. Upload race session emails, track improvements across 7 Dutch karting venues, compete on live driver leaderboards, and dissect every lap with precision data.</div>
+      <div class="card-stat">Laravel · Vue 3 · 990 tests · 7 tracks</div>
+      <div class="card-cta">Enter Karting →</div>
     </a>
 
   </div>
@@ -156,13 +154,24 @@
 
 <div class="also">
   <div class="also-label">Also helping build</div>
-  <div class="also-pills">
-    <a class="pill" href="https://iclaim.nl" target="_blank">
-      <span class="pill-dot"></span>iClaim <span class="pill-sub">Â· iclaim.nl</span>
+  <div class="also-grid">
+
+    <a class="card" href="https://iclaim.nl" target="_blank">
+      <div class="card-icon" style="font-size:22px;">🚗</div>
+      <div class="card-title">iClaim</div>
+      <div class="card-desc">Dutch vehicle damage communication platform. Replaces phone calls and emails with real-time digital dossiers — connecting lease companies, insurers, and repair shops through automated data exchange. ISO 9001 &amp; ISO/IEC 27001 certified.</div>
+      <div class="card-stat">iclaim.nl · B2B SaaS · Automotive</div>
+      <div class="card-cta">Visit iClaim →</div>
     </a>
-    <a class="pill" href="https://maki.gg" target="_blank">
-      <span class="pill-dot"></span>Maki <span class="pill-sub">Â· maki.gg</span>
+
+    <a class="card" href="https://maki.gg" target="_blank">
+      <div class="card-icon" style="font-size:22px;">🔥</div>
+      <div class="card-title">Maki</div>
+      <div class="card-desc">The only Discord app you'll ever need. AI-powered auto-moderation, XP &amp; levelling, Twitch/YouTube live alerts, 80+ server log types, growth analytics, and full ticket systems — all in one bot.</div>
+      <div class="card-stat">120M+ Users · 1M+ Servers · maki.gg</div>
+      <div class="card-cta">Visit Maki →</div>
     </a>
+
   </div>
 </div>
 
