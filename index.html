@@ -57,6 +57,20 @@
     .card-icon-kart span { width:6px;height:6px;border-radius:50%;background:var(--accent);display:block; }
     .card-icon-letter { font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:18px;color:var(--accent); }
     .card-title { font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:19px; }
+    .card-title-row { display:flex;align-items:center;justify-content:space-between;gap:10px; }
+    .status-badge {
+      font-size:10px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid;
+      white-space:nowrap;
+    }
+    .status-active { background:#1e3a25;border-color:#3f7f4f;color:#d8f4ce; }
+    .status-maintenance { background:#3a2d17;border-color:#8f6a2a;color:#f3e1b8; }
+    .status-archived { background:#2a2a31;border-color:#575764;color:#d3d3dd; }
     .card-desc { font-size:14px;color:var(--dim);line-height:1.55;flex:1; }
     .card-stat { font-size:12px;color:var(--faint); }
     .card-cta { font-size:14px;font-weight:600;color:var(--accent); }
@@ -108,33 +122,55 @@
 <div class="projects-wrap">
   <div class="section-label">Projects</div>
   <div class="projects">
-    <a class="card" href="/solyx-discord-bot/">
+    <a class="card" href="/showcase/discord-bot.html">
       <div class="card-icon"><div class="card-icon-inner"></div></div>
-      <div class="card-title">Discord Bot</div>
+      <div class="card-title-row">
+        <div class="card-title">Discord Bot</div>
+        <span class="status-badge status-active">Active</span>
+      </div>
       <div class="card-desc">A solo-developed Discord RPG bot with in-depth lore, quests, classes, PvP battles, weapons, armour, and earnable titles.</div>
       <div class="card-stat">490k+ Users &#183; 1600+ Servers</div>
       <div class="card-cta">Open Discord Bot &#8594;</div>
     </a>
-    <a class="card" href="/SolyxWebGame/">
+    <a class="card" href="/showcase/webgame.html">
       <div class="card-icon"><div class="card-icon-letter">G</div></div>
-      <div class="card-title">Web Game</div>
+      <div class="card-title-row">
+        <div class="card-title">Web Game</div>
+        <span class="status-badge status-active">Active</span>
+      </div>
       <div class="card-desc">Play the Solyx RPG directly in your browser. Level up, fight monsters, complete quests and compete on the leaderboard.</div>
       <div class="card-stat">Browser &#183; Free to play</div>
       <div class="card-cta">Play now &#8594;</div>
     </a>
     <a class="card" href="/mods/train-station-monitor/">
       <div class="card-icon"><img src="/assets/tsm.png" alt="Train Station Monitor"></div>
-      <div class="card-title">Train Station Monitor</div>
+      <div class="card-title-row">
+        <div class="card-title">Train Station Monitor</div>
+        <span class="status-badge status-active">Active</span>
+      </div>
       <div class="card-desc">A live, zero-config Factorio 2.0 rail-network dashboard. Auto-discovers every station &#8212; no circuit signals, no combinators needed.</div>
-      <div class="card-stat">v0.1.0 &#183; Factorio 2.0</div>
+      <div class="card-stat">v0.1.16 &#183; Factorio 2.0</div>
       <div class="card-cta">View the mod &#8594;</div>
     </a>
-    <a class="card" href="/showcase/karting-intro.html">
+    <a class="card" href="/showcase/karting.html">
       <div class="card-icon"><div class="card-icon-kart"><span></span></div></div>
-      <div class="card-title">Karting</div>
+      <div class="card-title-row">
+        <div class="card-title">Karting</div>
+        <span class="status-badge status-active">Active</span>
+      </div>
       <div class="card-desc">Lap times meet motorsport analytics. Upload race session emails, track improvements across 7 Dutch karting venues, compete on live driver leaderboards, and dissect every lap with precision data.</div>
       <div class="card-stat">Laravel &#183; Vue 3 &#183; 990 tests &#183; 7 tracks</div>
       <div class="card-cta">Try the demo &#8594;</div>
+    </a>
+    <a class="card" href="https://marketplace.visualstudio.com/search?term=active%20old%20files%20organiser&target=VSCode" target="_blank">
+      <div class="card-icon"><div class="card-icon-letter">VS</div></div>
+      <div class="card-title-row">
+        <div class="card-title">Active Old Files Organiser</div>
+        <span class="status-badge status-maintenance">Maintenance</span>
+      </div>
+      <div class="card-desc">VS Code extension that highlights stale files and helps you keep repositories clean with faster review and cleanup sessions.</div>
+      <div class="card-stat">VS Code Marketplace</div>
+      <div class="card-cta">Open extension &#8594;</div>
     </a>
   </div>
 </div>
