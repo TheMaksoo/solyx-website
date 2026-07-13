@@ -103,7 +103,55 @@
     .btn-ghost { background:var(--surface2); color:var(--text); }
     .btn-ghost:hover { border-color:var(--accent2); }
 
-    @media(max-width:800px){ .grid{ grid-template-columns:1fr; } }
+    .viz-grid {
+      margin-top:24px;
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+    .viz {
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:12px;
+      overflow:hidden;
+    }
+    .viz-head {
+      background:var(--surface2);
+      border-bottom:1px solid var(--border);
+      padding:10px 12px;
+      font-size:12px;
+      color:var(--faint);
+      font-weight:600;
+    }
+    .viz-body { padding:12px; }
+    .tree {
+      list-style:none;
+      display:grid;
+      gap:6px;
+      font-family:Consolas, monospace;
+      font-size:12px;
+      color:#d8d2df;
+    }
+    .lvl1 { padding-left:12px; }
+    .lvl2 { padding-left:24px; }
+    .hl { color:#ffd7cc; }
+    .flow {
+      list-style:none;
+      display:grid;
+      gap:8px;
+      font-size:13px;
+      color:#e8e3ee;
+    }
+    .flow li {
+      background:#23232b;
+      border:1px solid #353543;
+      border-radius:8px;
+      padding:8px 10px;
+      line-height:1.45;
+    }
+    .flow strong { color:#fff; }
+
+    @media(max-width:800px){ .grid{ grid-template-columns:1fr; } .viz-grid{ grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
@@ -159,6 +207,41 @@
       <a class="btn btn-primary" href="https://marketplace.visualstudio.com/search?term=active%20old%20files%20organiser&target=VSCode" target="_blank" rel="noopener noreferrer">Open in Marketplace</a>
       <a class="btn btn-ghost" href="https://github.com/TheMaksoo" target="_blank" rel="noopener noreferrer">Open GitHub profile</a>
     </div>
+
+    <section class="viz-grid" aria-label="How it looks in a typical project">
+      <article class="viz">
+        <div class="viz-head">Standard Laravel + Vue folder layout (example)</div>
+        <div class="viz-body">
+          <ul class="tree">
+            <li>project-root/</li>
+            <li class="lvl1">app/</li>
+            <li class="lvl1">routes/</li>
+            <li class="lvl1">database/</li>
+            <li class="lvl1">resources/</li>
+            <li class="lvl2">js/components/</li>
+            <li class="lvl2">js/pages/</li>
+            <li class="lvl2">views/</li>
+            <li class="lvl1">public/</li>
+            <li class="lvl1">tests/</li>
+            <li class="lvl1">storage/</li>
+            <li class="lvl1">.vscode/</li>
+            <li class="lvl1 hl">legacy/ (old area highlighted by extension)</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="viz">
+        <div class="viz-head">VS Code extension flow (what you will see)</div>
+        <div class="viz-body">
+          <ol class="flow">
+            <li><strong>1. Scan workspace:</strong> Extension reads file last-modified times and groups results by age.</li>
+            <li><strong>2. Sidebar view:</strong> You get buckets like 30d+, 90d+, 180d+, 365d+ with file counts.</li>
+            <li><strong>3. Open stale file:</strong> Click an entry to inspect the file before cleanup.</li>
+            <li><strong>4. Cleanup pass:</strong> Archive, refactor, or keep files intentionally with better context.</li>
+          </ol>
+        </div>
+      </article>
+    </section>
   </main>
 </body>
 </html>
